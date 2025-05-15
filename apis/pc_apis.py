@@ -593,6 +593,26 @@ class XHS_Apis():
             msg = str(e)
         return success, msg, note_out_comment_list
 
+    def get_note_all_out_comment_by_cursor(self, note_id: str, xsec_token: str, cookies_str: str,cursor : str, proxies: dict = None):
+        """
+            获取笔记的全部一级评论
+            :param note_id 笔记的id
+            :param cookies_str 你的cookies
+            返回笔记的全部一级评论
+        """
+        cursor = ''
+        note_out_comment_list = []
+        try:
+                success, msg, res_json = self.get_note_out_comment(note_id, cursor, xsec_token, cookies_str, proxies)
+                if not success:
+                    raise Exception(msg)
+                comments = res_json["data"]["comments"]
+                note_out_comment_list.extend(comments)
+        except Exception as e:
+            success = False
+            msg = str(e)
+        return success, msg, note_out_comment_list
+
     def get_note_inner_comment(self, comment: dict, cursor: str, xsec_token: str, cookies_str: str, proxies: dict = None):
         """
             获取指定位置的笔记二级评论
